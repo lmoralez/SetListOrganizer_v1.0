@@ -1,0 +1,8 @@
+{
+  "name": "setlist-organizer",
+  "version": "1.0.0",
+  "description": "Set List Organizer for REDLINE",
+  "main": "main.js",
+  "author": "Lorenzo Moralez",
+  "license": "MIT"
+}
