@@ -1,0 +1,15 @@
+name: Build Windows EXE
+on: [push]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: npm install -g electron-builder
+      - run: npm install
+      - run: electron-builder --win portable
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
