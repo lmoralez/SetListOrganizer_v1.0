@@ -12,5 +12,10 @@ jobs:
       - run: npm install -g electron-builder
       - run: npm install
       - run: electron-builder --win portable
+      - name: Upload built app
+        uses: actions/upload-artifact@v3
+        with:
+          name: SetListOrganizer_v1.0-win
+          path: dist/*.exe
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
