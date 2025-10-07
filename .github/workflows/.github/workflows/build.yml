@@ -11,7 +11,7 @@ jobs:
       - run: npm install electron
       - run: npm install -g electron-builder
       - run: npm install
-      - run: electron-builder --win portable
+      - run: electron-builder --win portable --publish never
       - name: Upload built app
         uses: actions/upload-artifact@v3
         with:
