@@ -1,21 +1,34 @@
 name: Build Windows EXE
+
 on: [push]
+
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: npm install electron
-      - run: npm install -g electron-builder
-      - run: npm install
-      - run: electron-builder --win portable --publish never
+
+      - name: Install Electron and Builder
+        run: |
+          npm install electron
+          npm install -g electron-builder
+          npm install
+
+      - name: Build App
+        run: electron-builder --win portable --publish never
+
       - name: Upload built app
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: SetListOrganizer_v1.0-win
-          path: dist/*.exe
+          path: |
+            dist/**/*.exe
+            "dist/setlist-organizer 1.0.0.exe"
+
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
