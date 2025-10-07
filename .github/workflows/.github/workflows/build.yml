@@ -8,6 +8,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
+      - run: npm install electron
       - run: npm install -g electron-builder
       - run: npm install
       - run: electron-builder --win portable
