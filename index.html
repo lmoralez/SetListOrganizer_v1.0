@@ -2,111 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Set List Organizer</title>
-  <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      margin: 0;
-      background: #111;
-      color: #eee;
-    }
-    header {
-      background: #8B0000;
-      color: white;
-      text-align: center;
-      padding: 1em;
-      font-size: 1.4em;
-      letter-spacing: 1px;
-    }
-    nav {
-      display: flex;
-      background: #222;
-      justify-content: space-around;
-      padding: 0.5em 0;
-    }
-    nav button {
-      background: transparent;
-      border: none;
-      color: #ccc;
-      font-size: 1em;
-      cursor: pointer;
-    }
-    nav button.active {
-      color: white;
-      border-bottom: 2px solid #ff4444;
-    }
-    .tab-content {
-      display: none;
-      padding: 1.2em;
-    }
-    .tab-content.active {
-      display: block;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1em;
-      background: #1e1e1e;
-    }
-    th, td {
-      border: 1px solid #333;
-      padding: 0.5em;
-      text-align: left;
-    }
-    th {
-      background: #333;
-    }
-    button.load-btn {
-      background: #ff4444;
-      border: none;
-      color: white;
-      padding: 0.6em 1.2em;
-      border-radius: 5px;
-      margin-top: 1em;
-      cursor: pointer;
-    }
-    button.load-btn:hover {
-      background: #ff2222;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REDLINE Set List Organizer</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <header>🎵 Set List Organizer - REDLINE</header>
-  <nav>
-    <button class="tab-btn active" data-tab="sets">Sets</button>
-    <button class="tab-btn" data-tab="quickpicks">Quick Picks</button>
-    <button class="tab-btn" data-tab="dance">Dance Styles</button>
-    <button class="tab-btn" data-tab="cheats">Cheat Sheet</button>
-  </nav>
+<body class="bg-gray-900 text-white font-sans">
+  <div class="container mx-auto p-4 text-center">
+    <h1 class="text-4xl font-bold mb-6 text-red-500">🎵 REDLINE Set List Organizer</h1>
 
-  <div id="sets" class="tab-content active">
-    <h2>Show Sets (3 × 14 Songs)</h2>
-    <button class="load-btn" onclick="loadSets()">Load Sets</button>
-    <div id="setDisplay"></div>
-  </div>
+    <div class="flex flex-wrap justify-center gap-3 mb-6">
+      <button id="loadExcel" class="btn">Load Excel File</button>
+      <button id="createSets" class="btn">Create Sets</button>
+      <button id="backupList" class="btn">Backup Rotation</button>
+      <button id="quickPicks" class="btn">Quick Picks</button>
+      <button id="danceGuide" class="btn">Dance Style Guide</button>
+      <button id="cheatSheet" class="btn">Cheat Sheet</button>
+    </div>
 
-  <div id="quickpicks" class="tab-content">
-    <h2>Quick Pick: CR / Spanish Songs</h2>
-    <ul id="quickList"></ul>
-  </div>
-
-  <div id="dance" class="tab-content">
-    <h2>Dance Style Guide</h2>
-    <table>
-      <tr><th>Style</th><th>Example Songs</th></tr>
-      <tr><td>Two-Step</td><td>Amarillo By Morning, The Fireman</td></tr>
-      <tr><td>Waltz</td><td>Tennessee Waltz, Neon Moon</td></tr>
-      <tr><td>Polka</td><td>Beer Barrel Polka</td></tr>
-      <tr><td>Shuffle</td><td>All My Exes Live in Texas</td></tr>
-    </table>
-  </div>
-
-  <div id="cheats" class="tab-content">
-    <h2>Cheat Sheet</h2>
-    <p>Use this section to show chord progressions, keys, or notes for each song.</p>
+    <div id="output" class="bg-gray-800 rounded-lg p-4 text-left overflow-auto h-[60vh]"></div>
   </div>
 
   <script src="renderer.js"></script>
 </body>
 </html>
-
