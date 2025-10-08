@@ -2,36 +2,111 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Set List Organizer</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-      background-color: #f4f4f4;
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      background: #111;
+      color: #eee;
     }
-    h1 {
-      color: #b22222;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      border: none;
-      background-color: #b22222;
+    header {
+      background: #8B0000;
       color: white;
-      font-size: 16px;
-      border-radius: 8px;
+      text-align: center;
+      padding: 1em;
+      font-size: 1.4em;
+      letter-spacing: 1px;
+    }
+    nav {
+      display: flex;
+      background: #222;
+      justify-content: space-around;
+      padding: 0.5em 0;
+    }
+    nav button {
+      background: transparent;
+      border: none;
+      color: #ccc;
+      font-size: 1em;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #e63946;
+    nav button.active {
+      color: white;
+      border-bottom: 2px solid #ff4444;
+    }
+    .tab-content {
+      display: none;
+      padding: 1.2em;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1em;
+      background: #1e1e1e;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 0.5em;
+      text-align: left;
+    }
+    th {
+      background: #333;
+    }
+    button.load-btn {
+      background: #ff4444;
+      border: none;
+      color: white;
+      padding: 0.6em 1.2em;
+      border-radius: 5px;
+      margin-top: 1em;
+      cursor: pointer;
+    }
+    button.load-btn:hover {
+      background: #ff2222;
     }
   </style>
 </head>
 <body>
-  <h1>🎶 Set List Organizer</h1>
-  <p>Welcome, Lorenzo! Your app is running successfully.</p>
-  <button onclick="alert('Feature coming soon!')">Load Song List</button>
+  <header>🎵 Set List Organizer - REDLINE</header>
+  <nav>
+    <button class="tab-btn active" data-tab="sets">Sets</button>
+    <button class="tab-btn" data-tab="quickpicks">Quick Picks</button>
+    <button class="tab-btn" data-tab="dance">Dance Styles</button>
+    <button class="tab-btn" data-tab="cheats">Cheat Sheet</button>
+  </nav>
+
+  <div id="sets" class="tab-content active">
+    <h2>Show Sets (3 × 14 Songs)</h2>
+    <button class="load-btn" onclick="loadSets()">Load Sets</button>
+    <div id="setDisplay"></div>
+  </div>
+
+  <div id="quickpicks" class="tab-content">
+    <h2>Quick Pick: CR / Spanish Songs</h2>
+    <ul id="quickList"></ul>
+  </div>
+
+  <div id="dance" class="tab-content">
+    <h2>Dance Style Guide</h2>
+    <table>
+      <tr><th>Style</th><th>Example Songs</th></tr>
+      <tr><td>Two-Step</td><td>Amarillo By Morning, The Fireman</td></tr>
+      <tr><td>Waltz</td><td>Tennessee Waltz, Neon Moon</td></tr>
+      <tr><td>Polka</td><td>Beer Barrel Polka</td></tr>
+      <tr><td>Shuffle</td><td>All My Exes Live in Texas</td></tr>
+    </table>
+  </div>
+
+  <div id="cheats" class="tab-content">
+    <h2>Cheat Sheet</h2>
+    <p>Use this section to show chord progressions, keys, or notes for each song.</p>
+  </div>
+
+  <script src="renderer.js"></script>
 </body>
 </html>
+
