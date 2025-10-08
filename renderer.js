@@ -1,44 +1,59 @@
-// Handle tab switching
-document.querySelectorAll(".tab-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
-    btn.classList.add("active");
-    document.getElementById(btn.dataset.tab).classList.add("active");
+const XLSX = require("xlsx");
+const { dialog } = require("@electron/remote");
+const fs = require("fs");
+
+document.getElementById("loadExcel").addEventListener("click", async () => {
+  const result = await dialog.showOpenDialog({ 
+    properties: ["openFile"], 
+    filters: [{ name: "Excel Files", extensions: ["xlsx", "xls"] }] 
   });
+  if (result.canceled) return;
+
+  const filePath = result.filePaths[0];
+  const workbook = XLSX.readFile(filePath);
+  const sheetName = workbook.SheetNames[0];
+  const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+  window.songData = data;
+  displaySongs(data);
 });
 
-// Example songs for quick picks
-const quickPicks = [
-  "Tragos Amargos",
-  "Volver Volver",
-  "El Paso",
-  "Rancho Grande",
-  "La Bamba",
-  "Mi Vida Loca"
-];
+function displaySongs(data) {
+  const output = document.getElementById("output");
+  output.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Song Title</th>
+          <th>Key</th>
+          <th>Pattern</th>
+          <th>BPM</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.map(row => `
+          <tr>
+            <td>${row["Song Title"] || ""}</td>
+            <td>${row["Key"] || ""}</td>
+            <td>${row["Pattern"] || ""}</td>
+            <td>${row["BPM"] || ""}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+}
 
-function loadSets() {
-  const sets = [
-    ["Achy Breaky Heart", "All My Exes Live in TX", "Amarillo By Morning", "Bandy the Rodeo Clown"],
-    ["Because I Love You", "Beer Barrel Polka", "Folsom Prison Blues", "Silver Wings"],
-    ["Neon Moon", "The Chair", "El Paso", "Tennessee Waltz"]
-  ];
+document.getElementById("createSets").addEventListener("click", () => {
+  if (!window.songData) return alert("Please load your Excel file first.");
+  const sets = [[], [], []];
+  window.songData.forEach((song, i) => sets[i % 3].push(song));
 
   let html = "";
   sets.forEach((set, i) => {
-    html += `<h3>Set ${i + 1}</h3><ul>`;
-    set.forEach(song => html += `<li>${song}</li>`);
+    html += `<h2 class="text-red-400 mt-4">Set ${i + 1}</h2><ul>`;
+    set.forEach(s => html += `<li>${s["Song Title"]}</li>`);
     html += "</ul>";
   });
-
-  document.getElementById("setDisplay").innerHTML = html;
-}
-
-// Load Quick Picks
-const quickList = document.getElementById("quickList");
-quickPicks.forEach(song => {
-  const li = document.createElement("li");
-  li.textContent = song;
-  quickList.appendChild(li);
+  document.getElementById("output").innerHTML = html;
 });
