@@ -22,18 +22,22 @@ jobs:
       - name: Build portable EXE
         run: |
           electron-builder --win portable
-          echo "Contents of dist directory:"
+          echo "=== DIST CONTENTS ==="
           dir dist
+          echo "=== WIN-UNPACKED CONTENTS ==="
+          dir dist\win-unpacked
 
       - name: Upload built EXE artifact
         if: success()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: SetListOrganizer_v1.0-win
           path: |
-            dist/**/*.exe
-            dist/*.exe
-            dist/win-unpacked/*.exe
+            dist\*.exe
+            dist\**\*.exe
+            dist\win-unpacked\*.exe
+            **\setlist-organizer*.exe
+          if-no-files-found: warn
 
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
