@@ -20,13 +20,20 @@ jobs:
           npm install
 
       - name: Build portable EXE
-        run: electron-builder --win portable
+        run: |
+          electron-builder --win portable
+          echo "Contents of dist directory:"
+          dir dist
 
-      - name: Upload built app
+      - name: Upload built EXE artifact
+        if: success()
         uses: actions/upload-artifact@v3
         with:
           name: SetListOrganizer_v1.0-win
-          path: dist/**/*.exe
+          path: |
+            dist/**/*.exe
+            dist/*.exe
+            dist/win-unpacked/*.exe
 
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
