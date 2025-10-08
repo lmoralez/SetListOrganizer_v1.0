@@ -5,6 +5,7 @@ on: [push]
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v3
 
@@ -12,12 +13,20 @@ jobs:
         with:
           node-version: 20
 
-      - run: npm install -g electron-builder
-      - run: npm install
-      - run: electron-builder --win portable
+      - name: Install dependencies
+        run: |
+          npm install electron
+          npm install -g electron-builder
+          npm install
+
+      - name: Build portable EXE
+        run: electron-builder --win portable
 
       - name: Upload built app
         uses: actions/upload-artifact@v3
         with:
-          name: SetListOrganizer_v1.0
-          path: dist/*.exe
+          name: SetListOrganizer_v1.0-win
+          path: dist/**/*.exe
+
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
