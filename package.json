@@ -5,7 +5,25 @@
   "main": "main.js",
   "author": "Lorenzo Moralez",
   "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "com.redline.setlistorganizer",
+    "productName": "SetListOrganizer",
+    "win": {
+      "target": "portable",
+      "icon": "assets/icon.ico"
+    },
+    "directories": {
+      "buildResources": "assets",
+      "output": "dist"
+    }
+  },
   "devDependencies": {
-    "electron": "30.0.9"
+    "electron": "30.0.9",
+    "electron-builder": "^26.0.12"
   }
 }
